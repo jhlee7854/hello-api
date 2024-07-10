@@ -19,5 +19,5 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Run build with Docker
         run: |
-          docker build -t jonghak/hello-api:0.0.1 .
-          docker push jonghak/hello-api:0.0.1
+          docker build -t jonghak/hello-api:0.0.3 .
+          docker push jonghak/hello-api:0.0.3
