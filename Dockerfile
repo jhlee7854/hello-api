@@ -1,14 +1,14 @@
-FROM golang:1.21.6-alpine3.19 AS build-stage
+FROM --platform=$BUILDPLATFORM golang:1.21.6-alpine3.19 AS build-stage
 
 WORKDIR /build
 
-COPY go.mod go.sum ./
+COPY go.mod ./
 RUN go mod download
 
 COPY *.go ./
 
-# RUN go build -o /build/hello-api
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -ldflags '-s' -o /build/hello-api .
+ RUN go build -a -ldflags '-s' -o /build/hello-api
+# RUN CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -a -ldflags '-s' -o /build/hello-api .
 
 FROM scratch
 
