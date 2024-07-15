@@ -1,20 +1,7 @@
-FROM --platform=$BUILDPLATFORM golang:alpine AS build-stage
-
-WORKDIR /build
-
-COPY go.mod ./
-RUN go mod download
-
-COPY *.go ./
-
-RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -o /build/hello-api
-
+# syntax=docker/dockerfile:1
+FROM --platform=$BUILDPLATFORM golang:alpine AS build
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM" > /log
 FROM alpine
-
-WORKDIR /app
-
-COPY --from=build-stage /build/hello-api .
-
-EXPOSE 8080
-
-ENTRYPOINT ["/app/hello-api"]
+COPY --from=build /log /log
