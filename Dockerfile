@@ -5,4 +5,4 @@ ARG BUILDPLATFORM
 RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM" > /log
 FROM alpine
 COPY --from=build /log /log
-RUN cat /log
+CMD ["cat", "/log"]
